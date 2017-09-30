@@ -1,6 +1,8 @@
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
+
 import { createUser } from './mutations/createUser';
 import { viewer } from './queries/viewer';
+import { nodeInterface, nodeField } from './interfaces/node';
 import notablePersonResolvers from './queries/notablePerson';
 import { merge } from 'lodash';
 import { Email } from './scalars/email';
@@ -19,8 +21,12 @@ const scalarTypes = {
 
 export const resolvers = merge(
   {
+    Node: {
+      __resolveType: nodeInterface.resolveType,
+    },
     RootQuery: {
       viewer,
+      node: nodeField,
     },
 
     RootMutation: {

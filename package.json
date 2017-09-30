@@ -7,10 +7,10 @@
   "scripts": {
     "pretest": "run-p generate-schema-types",
     "test": "run-p validate-schema validate-file-names lint-js lint-ts",
-    "validate-schema": "graphql-validator -s './src/schema.graphql' './src/examples/*.graphql'",
+    "validate-schema": "graphql-validator -s './src/schema/schema.graphql' './src/examples/*.graphql'",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts' --project tsconfig.json",
-    "generate-schema-types": "graphql-to-typescript src/schema.graphql src/typings/schema.ts",
+    "generate-schema-types": "graphql-to-typescript src/schema/schema.graphql src/typings/schema.ts",
     "generate-schema-types/dev": "nodemon --watch src/schema.graphql --exec 'run-p generate-schema-types'",
     "server/dev": "PORT=8080 nodemon --watch ./src --ext ts,graphql,tsx,json --exec 'ts-node src/server.ts --project ./src'",
     "dev": "run-p '*/dev'",
@@ -44,6 +44,7 @@
   ],
   "dependencies": {
     "@hollowverse/common": "https://github.com/hollowverse/common",
+    "@types/graphql-relay": "^0.4.2",
     "apollo-server-express": "^1.1.2",
     "body-parser": "^1.18.2",
     "class-sanitizer": "^0.0.5",
@@ -51,6 +52,7 @@
     "express": "^4.15.2",
     "got": "^7.1.0",
     "graphql-iso-date": "^3.3.0",
+    "graphql-relay": "^0.5.2",
     "graphql-tools": "^1.2.3",
     "mysql": "^2.14.1",
     "npm-run-all": "^4.0.2",

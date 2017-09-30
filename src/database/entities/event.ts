@@ -16,7 +16,7 @@ import { Comment } from './comment';
  * An event about a notable person
  */
 @Entity()
-export class Event extends BaseEntity {
+export class NotablePersonEvent extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Trim()

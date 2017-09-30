@@ -1,7 +1,7 @@
-import { connection } from '../../database/connection';
-import { NotablePerson } from '../../database/entities/notablePerson';
-import { Event } from '../../database/entities/event';
-import { NotablePersonRootQueryArgs } from '../../typings/schema';
+import { connection } from '../../../database/connection';
+import { NotablePerson } from '../../../database/entities/notablePerson';
+import { NotablePersonEvent } from '../../../database/entities/event';
+import { NotablePersonRootQueryArgs } from '../../../typings/schema';
 
 export default {
   RootQuery: {
@@ -22,7 +22,7 @@ export default {
     async events(np: NotablePerson) {
       const db = await connection;
 
-      const repo = db.getRepository(Event);
+      const repo = db.getRepository(NotablePersonEvent);
 
       return repo.find({
         where: {

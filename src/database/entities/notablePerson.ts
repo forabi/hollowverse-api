@@ -9,7 +9,7 @@ import {
 import { IsUrl } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
-import { Event } from './event';
+import { NotablePersonEvent } from './event';
 import { Label } from './label';
 
 /**
@@ -36,11 +36,11 @@ export class NotablePerson extends BaseEntity {
   @Column({ type: 'text', nullable: false })
   photoUrl: string;
 
-  @OneToMany(_ => Event, event => event.notablePerson, {
+  @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
-  events: Event[];
+  events: NotablePersonEvent[];
 
   @ManyToMany(_ => Label, label => label.notablePerson, {
     cascadeInsert: true,

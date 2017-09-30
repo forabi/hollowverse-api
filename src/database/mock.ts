@@ -1,7 +1,9 @@
+// tslint:disable no-floating-promises
+
 import { connection } from './connection';
 import { NotablePerson } from './entities/notablePerson';
 import { User } from './entities/user';
-import { Event } from './entities/event';
+import { NotablePersonEvent } from './entities/event';
 import { Comment } from './entities/comment';
 import { Label } from './entities/label';
 import * as Chance from 'chance';
@@ -45,7 +47,7 @@ if (isUsingProductionDatabase === false) {
       await db.entityManager.persist(people);
 
       const events = times(1000, () => {
-        const event = new Event();
+        const event = new NotablePersonEvent();
         event.happenedOn = chance.date();
         event.postedAt = new Date();
         event.isQuoteByNotablePerson = chance.bool();

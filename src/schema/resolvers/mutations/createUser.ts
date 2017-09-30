@@ -1,9 +1,12 @@
-import { connection } from '../../database/connection';
-import { User } from '../../database/entities/user';
-import { CreateUserRootMutationArgs, RootMutation } from '../../typings/schema';
-import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
-import { SchemaContext } from '../../typings/schemaContext';
-import { ApiError } from '../../helpers/apiError';
+import { connection } from '../../../database/connection';
+import { User } from '../../../database/entities/user';
+import {
+  CreateUserRootMutationArgs,
+  RootMutation,
+} from '../../../typings/schema';
+import { sendFacebookAuthenticatedRequest } from '../../../helpers/facebook';
+import { SchemaContext } from '../../../typings/schemaContext';
+import { ApiError } from '../../../helpers/apiError';
 
 /**
  * Create a new user passing using a valid Facebook access token
@@ -14,7 +17,7 @@ import { ApiError } from '../../helpers/apiError';
  */
 export async function createUser(
   _: undefined,
-  { data: { fbAccessToken, email, name } }: CreateUserRootMutationArgs,
+  { input: { fbAccessToken, email, name } }: CreateUserRootMutationArgs,
   context: SchemaContext,
 ): Promise<RootMutation['createUser']> {
   if (context.viewer) {
@@ -56,5 +59,11 @@ export async function createUser(
 
   const users = db.getRepository(User);
 
-  return users.persist(user);
+  await users.persist(user);
+
+  return {
+    name: user.name,
+    signedUpAt: user.signedUpAt,
+    clientMutationId: 'abc',
+  };
 }

@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { schema } from './schema';
+import { schema } from './schema/schema';
 import { formatError } from './helpers/formatError';
 import { redirectToHttps } from './redirectToHttps';
 import { health, setIsHealthy } from './health';
@@ -10,6 +10,7 @@ import { findUserByFacebookAccessToken } from './helpers/auth';
 
 import { connection } from './database/connection';
 
+// tslint:disable-next-line no-floating-promises
 connection.catch(_ => {
   setIsHealthy(false);
 });
@@ -40,15 +41,16 @@ api.use(
     }
 
     return {
-      schema,
+      schema: schema as any,
       formatError,
       context,
     };
   }),
 );
 
+const { FB_ACCESS_TOKEN } = process.env;
 const debugHeaders = [
-  `'Authorization': 'Bearer ${process.env.FB_ACCESS_TOKEN}'`,
+  FB_ACCESS_TOKEN ? `'Authorization': 'Bearer ${FB_ACCESS_TOKEN}'` : null,
 ];
 
 api.use(
@@ -58,7 +60,7 @@ api.use(
     ...process.env.NODE_ENV === 'production'
       ? undefined
       : {
-          passHeader: debugHeaders.join('\n'),
+          passHeader: debugHeaders.filter(Boolean).join('\n'),
         },
   }),
 );

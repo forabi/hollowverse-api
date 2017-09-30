@@ -10,6 +10,17 @@ scalar Email
 # A full URL with the protocol. Accepted protocols are http and https only.
 scalar Url
 
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
 #A notable person's label, e.g. Liberal, Democrat
 type Label {
   id: ID!
@@ -18,14 +29,15 @@ type Label {
 }
 
 # A comment on a notable person's event
-type EventComment {
+type EventComment implements Node {
+  id: ID!
   ownerId: ID!
   photoUrl: Url
   text: String!
 }
 
 # An event about a notable person, must have a source link
-type Event {
+type NotablePersonEvent implements Node {
   id: ID!
   quote: String!
   isQuoteByNotablePerson: Boolean!
@@ -34,16 +46,37 @@ type Event {
   postedAt: DateTime!
   # The date the event happened
   happenedOn: DateOnly!
-  comments: [EventComment!]
+  comments: [EventComment!]!
+}
+
+type EventCommentConnection {
+  edges: [EventCommentEdge]
+  pageInfo: PageInfo!
+}
+
+type EventCommentEdge {
+  cursor: String!
+  node: EventComment
+}
+
+type NotablePersonEventConnection {
+  edges: [NotablePersonEventEdge]
+  pageInfo: PageInfo!
+}
+
+type NotablePersonEventEdge {
+  cursor: String!
+  node: NotablePersonEvent
 }
 
 # A public figure or an influential person
-type NotablePerson {
+type NotablePerson implements Node {
+  id: ID!
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
   name: String!
   photoUrl: Url!
-  events: [Event!]!
+  events: [NotablePersonEvent!]!
   labels: [Label!]!
 }
 
@@ -73,10 +106,18 @@ type Viewer implements UserInterface {
   signedUpAt: DateTime!
 }
 
+type CreateUserPayload {
+  clientMutationId: String!
+  name: String!
+  signedUpAt: DateTime!
+}
+
 type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
   notablePerson(slug: String!): NotablePerson
+  # Fetch any object that implements the Node interface. Required for Relay compliance.
+  node(id: ID!): Node
 }
 
 input CreateUserInput {
@@ -92,7 +133,7 @@ type RootMutation {
   # issued for the Hollowverse application.
   # The name and email of the new user will be obtained from Facebook if
   # not specified in the mutation input.
-  createUser(data: CreateUserInput!): Viewer
+  createUser(input: CreateUserInput!): CreateUserPayload
 }
 
 schema {

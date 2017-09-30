@@ -89,6 +89,16 @@
   dependencies:
     "@types/node" "*"
 
+"@types/graphql-relay@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@types/graphql-relay/-/graphql-relay-0.4.2.tgz#d26bb1e793bb265e4dbcd705f58d42ee84d02d3f"
+  dependencies:
+    "@types/graphql" "*"
+
+"@types/graphql@*":
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.11.4.tgz#6e067838246ec741be3950211323726a77147472"
+
 "@types/graphql@^0.8.5":
   version "0.8.6"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.8.6.tgz#b34fb880493ba835b0c067024ee70130d6f9bb68"
@@ -2176,6 +2186,10 @@ graphql-language-service-utils@0.0.10:
   dependencies:
     graphql "^0.9.6"
     graphql-language-service-types "0.0.16"
+
+graphql-relay@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/graphql-relay/-/graphql-relay-0.5.2.tgz#40ff714efd60c2cd89e0bcc79e2afa6d87fa8673"
 
 graphql-subscriptions@^0.3.1:
   version "0.3.1"
