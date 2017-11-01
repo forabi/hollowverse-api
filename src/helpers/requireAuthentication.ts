@@ -1,6 +1,13 @@
 import { SchemaContext } from '../typings/schemaContext';
 import { ApiError } from './apiError';
-import { GraphQLFieldResolver, GraphQLResolveInfo } from 'graphql/type';
+import { GraphQLResolveInfo } from 'graphql/type';
+
+type GraphQLFieldResolver<TSource, TContext, A = Record<string, any>> = (
+  source: TSource,
+  args: A,
+  context: TContext,
+  info: GraphQLResolveInfo,
+) => any;
 
 /**
  * Creates a higher-order GraphQL resolver that wraps a GraphQL resolver and checks
@@ -9,7 +16,7 @@ import { GraphQLFieldResolver, GraphQLResolveInfo } from 'graphql/type';
  * If the request is not authenticated, an instance of `MustBeAuthorizedError` is thrown.
  */
 export function requireAuthentication<S, A>(
-  resolver: GraphQLFieldResolver<S, SchemaContext>,
+  resolver: GraphQLFieldResolver<S, SchemaContext, A>,
 ) {
   return (
     source: S,
