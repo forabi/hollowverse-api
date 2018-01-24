@@ -868,7 +868,7 @@ cli-cursor@^2.1.0:
   dependencies:
     restore-cursor "^2.0.0"
 
-cli-highlight@^1.1.4:
+cli-highlight@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/cli-highlight/-/cli-highlight-1.2.3.tgz#b200f97ed0e43d24633e89de0f489a48bb87d2bf"
   dependencies:
@@ -4081,6 +4081,10 @@ reflect-metadata@^0.1.10:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
 
+reflect-metadata@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.12.tgz#311bf0c6b63cd782f228a81abe146a2bfa9c56f2"
+
 regenerator-runtime@^0.10.0, regenerator-runtime@^0.10.5:
   version "0.10.5"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
@@ -4930,13 +4934,13 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typeorm@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.1.9.tgz#208a5a2c7e0139621cacecb0636753190a988d2b"
+typeorm@0.2.0-alpha.13:
+  version "0.2.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.2.0-alpha.13.tgz#d3895684d83da64b3bde7e2647723e8262be67da"
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.0.1"
-    cli-highlight "^1.1.4"
+    cli-highlight "^1.2.2"
     debug "^3.1.0"
     dotenv "^4.0.0"
     glob "^7.1.2"
