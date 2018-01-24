@@ -10,6 +10,7 @@ import { BaseEntity } from './BaseEntity';
 import { EditorialSummary } from './EditorialSummary';
 import { EditorialSummaryNodeType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
+import { Trim } from '@hollowverse/class-sanitizer';
 
 const nodeTypes: Record<EditorialSummaryNodeType, string> = {
   quote: '',
@@ -53,6 +54,7 @@ export class EditorialSummaryNode extends BaseEntity {
   })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()
+  @Trim()
   text: string | null;
 
   @ValidateIf((_, v) => typeof v === 'string')
@@ -71,16 +73,20 @@ export class EditorialSummaryNode extends BaseEntity {
 
   @ManyToOne(
     _ => EditorialSummary,
-    editorialSUmmary => editorialSUmmary.nodes,
+    editorialSummary => editorialSummary.nodes,
     {
       nullable: false,
     },
   )
   editorialSummary: EditorialSummary;
 
-  @ManyToOne(_ => EditorialSummaryNode, node => node.children)
+  @ManyToOne(_ => EditorialSummaryNode, node => node.children, {
+    cascade: ['insert', 'update'],
+  })
   parent: EditorialSummaryNode | null;
 
-  @OneToMany(_ => EditorialSummaryNode, node => node.parent)
+  @OneToMany(_ => EditorialSummaryNode, node => node.parent, {
+    cascade: ['insert', 'update'],
+  })
   children: EditorialSummaryNode[];
 }
