@@ -10,7 +10,6 @@ import { BaseEntity } from './BaseEntity';
 import { EditorialSummary } from './EditorialSummary';
 import { EditorialSummaryNodeType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
-import { Trim } from '@hollowverse/class-sanitizer';
 
 const nodeTypes: Record<EditorialSummaryNodeType, string> = {
   quote: '',
@@ -54,7 +53,6 @@ export class EditorialSummaryNode extends BaseEntity {
   })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()
-  @Trim()
   text: string | null;
 
   @ValidateIf((_, v) => typeof v === 'string')
