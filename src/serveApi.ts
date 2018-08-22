@@ -5,14 +5,8 @@ const serverPromise = createApiServer().then(expressApp =>
   awsServerlessExpress.createServer(expressApp as any, undefined, ['*/*']),
 );
 
-export const serveApi: AWSLambda.Handler = async (event, context) =>
-  serverPromise.then(async server => {
-    // tslint:disable-next-line promise-must-complete
-    return new Promise(resolve => {
-      // See https://github.com/awslabs/aws-serverless-express/issues/134
-      // eslint-disable-next-line no-param-reassign
-      context.succeed = resolve;
+export const serveApi: AWSLambda.Handler = async (event, context) => {
+  const server = await serverPromise;
 
-      awsServerlessExpress.proxy(server, event, context);
-    });
-  });
+  return awsServerlessExpress.proxy(server, event, context, 'PROMISE');
+};
